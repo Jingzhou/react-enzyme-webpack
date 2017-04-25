@@ -1,14 +1,10 @@
-import React from 'react';
-
-require('./App.css');
+import React, { Component } from 'react';
+import cssModules from 'react-css-modules';
+import styles from './App.scss';
 
 // export default () => <h1>Hello World</h1>;
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
+class App extends Component {
   render() {
     return (
       <h1>Hello World</h1>
@@ -16,3 +12,4 @@ export default class App extends React.Component {
   }
 }
 
+export default cssModules(App, styles, { allowMultiple: true, errorWhenNotFound: false });

@@ -23,8 +23,20 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.css$/, include: path.resolve(__dirname, 'app'), loader: 'style-loader!css-loader' },
-      { test: /\.js[x]?$/, include: path.resolve(__dirname, 'app'), exclude: /node_modules/, loader: 'babel-loader' }
+      {
+        test: /\.css$/,
+        include: path.resolve(__dirname, 'app'),
+        loaders: ['style-loader', 'css-loader'],
+      },
+      { test: /\.js[x]?$/, include: path.resolve(__dirname, 'app'), exclude: /node_modules/, loader: 'babel-loader' },
+      {
+        test: /\.scss$/,
+        exclude: path.resolve(__dirname, '../src/css/'), // 跳过 node_modules 目录
+        loaders: [
+          'style-loader',
+          'css-loader?modules&sourceMap=true&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+        ],
+      },
     ]
   },
   resolve: {
