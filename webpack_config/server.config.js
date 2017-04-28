@@ -13,8 +13,6 @@ const { port, host } = config.server;
 
 try {
   const compiler = webpack(webpackConfig);
-  webpackConfig.entry.index.unshift('webpack-dev-server/client?http://192.168.0.210:8000/');
-  webpackConfig.entry.index.unshift('webpack/hot/dev-server');
   const server = new WebpackDevServer(compiler, {
     contentBase: path.resolve(__dirname, '../'),
     historyApiFallback: true,

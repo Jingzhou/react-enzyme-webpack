@@ -1,18 +1,16 @@
 const webpack = require('webpack');
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-
+const cfg = require('./config');
+const htmlHelper = require('./html_helper');
 const uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 module.exports = {
   devtool: 'cheap-source-map',
-  entry: {
-    index: [path.resolve(__dirname, '../app/main.jsx')],
-  },
+  entry: htmlHelper.createHtmlentry(cfg.html),
   output: {
     path: path.resolve(__dirname, '../build'),
     publicPath: './',
-    filename: './bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     loaders: [
@@ -47,9 +45,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new CopyWebpackPlugin([
-      { from: './index.html', to: 'index.html' },
-      // { from: './app/css/main.css', to: 'css/main.css' }
-    ])
+    ...htmlHelper.createHtmlPlugin(cfg.html),
   ]
 };

@@ -1,18 +1,17 @@
 const webpack = require('webpack');
 const path = require('path');
 const cfg = require('./config');
+const htmlHelper = require('./html_helper');
 const { port, host } = cfg.server;
 
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
-  entry: {
-    index: [path.resolve(__dirname, '../app/main.jsx')],
-  },
+  entry: htmlHelper.createHtmlentry(cfg.html),
   output: {
-    path: path.resolve(__dirname, '../build'),
+    path: path.resolve(__dirname, '../'),
     publicPath: `http://${host}:${port}/`,
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     loaders: [
@@ -37,5 +36,6 @@ module.exports = {
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
+    ...htmlHelper.createHtmlPlugin(cfg.html),
   ]
 };

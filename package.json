@@ -6,7 +6,7 @@
   "scripts": {
     "eslint": "eslint --cache --ignore-path .gitignore --fix --ext .jsx,.js --format=node_modules/eslint-formatter-pretty .",
     "test": "mocha --require ignore-styles --compilers js:babel-core/register --require ./test/setup.js",
-    "build": "rimraf build/ && SET NODE_ENV=production & webpack --config ./webpack_config/webpack.production.config.js",
+    "build": "rimraf build/ && SET NODE_ENV=production & webpack --config ./webpack_config/webpack.production.config.js & node ./webpack_config/server.production.config.js",
     "bstart": "SET NODE_ENV=production & node ./webpack_config/server.production.config.js",
     "start": "node ./webpack_config/server.config.js",
     "validate": "npm ls",
@@ -42,6 +42,7 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-react": "latest",
     "html-asset-webpack-plugin": "^1.0.1",
+    "html-webpack-plugin": "^2.28.0",
     "husky": "^0.12.0",
     "ignore-styles": "^5.0.1",
     "ip": "^1.1.5",

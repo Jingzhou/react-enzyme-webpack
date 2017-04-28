@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import cssModules from 'react-css-modules';
-import styles from './App.scss';
+import styles from './App2.scss';
 
-class App extends Component {
+class App2 extends Component {
   render() {
     return (
       <div>
@@ -13,4 +13,4 @@ class App extends Component {
   }
 }
 
-export default cssModules(App, styles, { allowMultiple: true, errorWhenNotFound: false });
+export default cssModules(App2, styles, { allowMultiple: true, errorWhenNotFound: false });
