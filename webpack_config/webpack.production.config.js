@@ -6,7 +6,7 @@ const uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 module.exports = {
   devtool: 'cheap-source-map',
-  entry: htmlHelper.createHtmlentry(cfg.html),
+  entry: htmlHelper.createHtmlentry(cfg.html, 'production'),
   output: {
     path: path.resolve(__dirname, '../build'),
     publicPath: './',

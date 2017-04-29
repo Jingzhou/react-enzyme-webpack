@@ -6,18 +6,18 @@ const path = require('path');
 const config = require('./config');
 const { host, port } = config.server;
 
-function createHtmlentry(cfg) {
+function createHtmlentry(cfg, env = '') {
   const devEntery = [    // 开发模式的entry
     'webpack/hot/dev-server',
     `webpack-dev-server/client?http://${host}:${port}`
   ];
   const out = {};
+  console.log(env);
   if (Array.isArray(cfg) && cfg.length > 0) {   // 多entry模式
     cfg.forEach(e => {
-      out[e.name] = process.env.NODE_ENV.trim() === 'production' ? path.resolve(__dirname, e.entry)
+      out[e.name] = env === 'production' ? path.resolve(__dirname, e.entry)
         : devEntery.concat(path.resolve(__dirname, e.entry));
     });
-    console.log(out);
     return out;
   }
 
