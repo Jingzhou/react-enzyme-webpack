@@ -1,8 +1,14 @@
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const cfg = require('./config');
 const htmlHelper = require('./html_helper');
-const uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+
+const extractCSS = new ExtractTextPlugin({
+  filename: 'css/[name].css',
+  allChunks: true,
+});
 
 module.exports = {
   devtool: 'cheap-source-map',
@@ -17,24 +23,31 @@ module.exports = {
       {
         test: /\.css$/,
         include: path.resolve(__dirname, '../app/css/'),
-        loaders: ['style-loader', 'css-loader'],
+        use: extractCSS.extract({
+          use: ['css-loader?minimize', 'sass-loader'],
+          publicPath: '../',
+        }),
       },
       { test: /\.js[x]?$/, include: path.resolve(__dirname, '../app'), exclude: /node_modules/, loader: 'babel-loader' },
       {
         test: /\.scss$/,
         exclude: path.resolve(__dirname, '../app/css/'),
-        loaders: [
-          'style-loader',
-          'css-loader?modules&sourceMap=true&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
-        ],
+        use: extractCSS.extract({
+          use: [
+            'css-loader?minimize&modules&&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
+            'sass-loader',
+          ],
+          publicPath: '../',
+        }),
       },
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: ['.js', '.jsx']
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
+    extractCSS,
     new uglifyJsPlugin({
       compress: {
         warnings: false

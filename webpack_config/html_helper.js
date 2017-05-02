@@ -12,7 +12,6 @@ function createHtmlentry(cfg, env = '') {
     `webpack-dev-server/client?http://${host}:${port}`
   ];
   const out = {};
-  console.log(env);
   if (Array.isArray(cfg) && cfg.length > 0) {   // 多entry模式
     cfg.forEach(e => {
       out[e.name] = env === 'production' ? path.resolve(__dirname, e.entry)
