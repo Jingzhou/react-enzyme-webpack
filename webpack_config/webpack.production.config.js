@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 const uglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const cfg = require('./config');
 const htmlHelper = require('./html_helper');
@@ -46,11 +47,17 @@ module.exports = {
     extensions: ['.js', '.jsx']
   },
   plugins: [
-    new webpack.optimize.DedupePlugin(),
+    new CommonsChunkPlugin({
+      name: 'vender',
+      filename: 'vender.min.js',
+    }),
     extractCSS,
     new uglifyJsPlugin({
+      output: {
+        comments: false,
+      },
       compress: {
-        warnings: false
+        warnings: false,
       }
     }),
     new webpack.DefinePlugin({
